@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+    id("io.papermc.paperweight.userdev") version "2.0.0-beta.13"
+}
+
+group = 'com.ixbob.thepit'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'papermc'
+        url = 'https://repo.papermc.io/repository/maven-public/'
+    }
+}
+
+dependencies {
+    paperweight.paperDevBundle("1.21.4-R0.1-SNAPSHOT")
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.assemble {
+    // make the reobfJar task run on the default build task
+    dependsOn(tasks.reobfJar)
+}
+
+tasks.register('moveOutputToTestServer') {
+    doLast {
+        def testServerDir = project.hasProperty('testServerDir') ? project.testServerDir : "${projectDir}/test-server"
+
+        def pluginsDir = file("${testServerDir}/plugins")
+        if (!pluginsDir.exists()) {
+            pluginsDir.mkdirs()
+        }
+
+        def jarFiles = fileTree("${projectDir}/build/libs").matching { include "*-reobf.jar" }
+        jarFiles.each {jar ->
+            copy {
+                from jar
+                into pluginsDir
+            }
+            println "Moved ${jar.name} to ${pluginsDir}"
+        }
+    }
+}

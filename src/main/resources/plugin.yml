@@ -1,0 +1,7 @@
+name: ThePitReloaded
+version: 0.0.1
+main: net.ixbob.thepit.ThePit
+description: The Pit Reloaded plugin by IXBOB
+author: IXBOB
+website: https://github.com/IXBOB
+api-version: '1.21.4'
