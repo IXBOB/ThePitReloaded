@@ -5,3 +5,5 @@ description: The Pit Reloaded plugin by IXBOB
 author: IXBOB
 website: https://github.com/IXBOB
 api-version: '1.21.4'
+libraries:
+  - org.mongodb:mongodb-driver-sync:5.2.1
