@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id("io.papermc.paperweight.userdev") version "2.0.0-beta.13"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 group = 'net.ixbob.thepit'
@@ -12,10 +13,13 @@ repositories {
         name = 'papermc'
         url = 'https://repo.papermc.io/repository/maven-public/'
     }
+    maven { url = uri("https://repo.codemc.io/repository/maven-releases/") }
+    maven { url = uri("https://repo.codemc.io/repository/maven-snapshots/") }
 }
 
 dependencies {
     paperweight.paperDevBundle("1.21.4-R0.1-SNAPSHOT")
+    compileOnly("com.github.retrooper:packetevents-spigot:2.7.0")
     implementation 'org.mongodb:mongodb-driver-sync:5.2.1'
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'

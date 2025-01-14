@@ -3,7 +3,10 @@ package net.ixbob.thepit.holder;
 import net.ixbob.thepit.PlayerEconomy;
 import net.ixbob.thepit.listener.PlayerJoinListener;
 import net.ixbob.thepit.listener.PlayerQuitListener;
-import net.ixbob.thepit.observer.*;
+import net.ixbob.thepit.observer.PlayerJoinObserverObject;
+import net.ixbob.thepit.observer.PlayerJoinObservingData;
+import net.ixbob.thepit.observer.PlayerQuitObserverObject;
+import net.ixbob.thepit.observer.PlayerQuitObservingData;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -21,6 +24,10 @@ public class PlayerEconomyHolder implements PlayerJoinObserverObject, PlayerQuit
 
     public static PlayerEconomyHolder getInstance() {
         return INSTANCE;
+    }
+
+    public PlayerEconomy getEconomy(Player player) {
+        return holdingEcoMap.get(player);
     }
 
     @Override

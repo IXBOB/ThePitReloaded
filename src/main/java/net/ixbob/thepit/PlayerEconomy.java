@@ -37,6 +37,10 @@ public class PlayerEconomy {
                 savedEcoData.getDouble(PlayerEconomyCollection.FIELD_PLAYER_XP_AMOUNT));
     }
 
+    private void onEconomyUpdate() {
+        MongoDBManager.getInstance().getPlayerEconomyCollection().updatePlayerEcoData(this);
+    }
+
     public Player getPlayer() {
         return this.player;
     }
@@ -47,7 +51,7 @@ public class PlayerEconomy {
 
     public void setCoinAmount(double coinAmount) {
         this.coinAmount = coinAmount;
-        MongoDBManager.getInstance().getPlayerEconomyCollection().updatePlayerEcoData(this);
+        onEconomyUpdate();
     }
 
     public double getPointAmount() {
@@ -56,7 +60,7 @@ public class PlayerEconomy {
 
     public void setPointAmount(double pointAmount) {
         this.pointAmount = pointAmount;
-        MongoDBManager.getInstance().getPlayerEconomyCollection().updatePlayerEcoData(this);
+        onEconomyUpdate();
     }
 
     public double getXpAmount() {
@@ -65,6 +69,6 @@ public class PlayerEconomy {
 
     public void setXpAmount(double xpAmount) {
         this.xpAmount = xpAmount;
-        MongoDBManager.getInstance().getPlayerEconomyCollection().updatePlayerEcoData(this);
+        onEconomyUpdate();
     }
 }

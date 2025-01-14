@@ -43,11 +43,6 @@ public class PlayerJoinListener implements Listener, PlayerJoinObservedObject {
     }
 
     @Override
-    public void detachObserver(PlayerJoinObserverObject observer) {
-        this.playerJoinObservers.remove(observer);
-    }
-
-    @Override
     public void notifyObservers(PlayerJoinObservingData data) {
         for (PlayerJoinObserverObject observer : this.playerJoinObservers) {
             observer.onNotified(data);

@@ -27,6 +27,12 @@ public abstract class DBCollection {
                 .first();
     }
 
+    protected Document findFirstEqual(String field, Object value) {
+        return this.legacyDBCollection
+                .find(eq(field, value))
+                .first();
+    }
+
     protected void replaceOne(Document document) {
         legacyDBCollection.replaceOne(new Document(FIELD_ID, document.get(FIELD_ID)), document);
     }

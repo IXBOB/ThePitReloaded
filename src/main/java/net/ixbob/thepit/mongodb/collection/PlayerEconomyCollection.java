@@ -1,11 +1,9 @@
 package net.ixbob.thepit.mongodb.collection;
 
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Projections;
 import net.ixbob.thepit.PlayerEconomy;
 import net.ixbob.thepit.util.DateTimeUtil;
 import org.bson.Document;
-import org.bson.conversions.Bson;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -39,13 +37,12 @@ public class PlayerEconomyCollection extends DBCollection {
 
     /**
      * 获取数据库中存储的玩家经济信息
+     *
      * @param player 玩家对象
      * @return 数据库信息，若不存在玩家信息则返回null
      */
     public Document getPlayerEcoData(Player player) {
-        Bson projectionFields = Projections.fields(
-                Projections.include(FIELD_PLAYER_NAME));
-        return super.findFirstEqual(FIELD_PLAYER_NAME, player.getName(), projectionFields);
+        return super.findFirstEqual(FIELD_PLAYER_NAME, player.getName());
     }
 
     private Document updateDocument(@NotNull Document document, @NotNull PlayerEconomy playerEconomy) {

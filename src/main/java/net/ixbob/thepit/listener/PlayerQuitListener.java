@@ -44,11 +44,6 @@ public class PlayerQuitListener implements Listener, PlayerQuitObservedObject {
     }
 
     @Override
-    public void detachObserver(PlayerQuitObserverObject observer) {
-        this.playerQuitObservers.remove(observer);
-    }
-
-    @Override
     public void notifyObservers(PlayerQuitObservingData data) {
         for (PlayerQuitObserverObject observer : this.playerQuitObservers) {
             observer.onNotified(data);
