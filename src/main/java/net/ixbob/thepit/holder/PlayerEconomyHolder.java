@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 public class PlayerEconomyHolder implements PlayerJoinObserverObject, PlayerQuitObserverObject {
 
-    private static final PlayerEconomyHolder INSTANCE = new PlayerEconomyHolder();
+    private static PlayerEconomyHolder instance = new PlayerEconomyHolder();
 
     HashMap<Player, PlayerEconomy> holdingEcoMap = new HashMap<>();
 
@@ -23,7 +23,10 @@ public class PlayerEconomyHolder implements PlayerJoinObserverObject, PlayerQuit
     }
 
     public static PlayerEconomyHolder getInstance() {
-        return INSTANCE;
+        if (instance == null) {
+            instance = new PlayerEconomyHolder();
+        }
+        return instance;
     }
 
     public PlayerEconomy getEconomy(Player player) {

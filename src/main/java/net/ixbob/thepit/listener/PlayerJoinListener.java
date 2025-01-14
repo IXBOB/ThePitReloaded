@@ -1,7 +1,9 @@
 package net.ixbob.thepit.listener;
 
 import net.ixbob.thepit.mongodb.MongoDBManager;
-import net.ixbob.thepit.observer.*;
+import net.ixbob.thepit.observer.PlayerJoinObservedObject;
+import net.ixbob.thepit.observer.PlayerJoinObserverObject;
+import net.ixbob.thepit.observer.PlayerJoinObservingData;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -17,7 +19,8 @@ public class PlayerJoinListener implements Listener, PlayerJoinObservedObject {
     private static final PlayerJoinListener INSTANCE = new PlayerJoinListener();
     ArrayList<PlayerJoinObserverObject> playerJoinObservers = new ArrayList<>();
 
-    private PlayerJoinListener() {}
+    private PlayerJoinListener() {
+    }
 
     public static PlayerJoinListener getInstance() {
         return INSTANCE;

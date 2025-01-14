@@ -19,7 +19,7 @@ repositories {
 
 dependencies {
     paperweight.paperDevBundle("1.21.4-R0.1-SNAPSHOT")
-    compileOnly("com.github.retrooper:packetevents-spigot:2.7.0")
+    implementation "com.github.retrooper:packetevents-spigot:2.7.0"
     implementation 'org.mongodb:mongodb-driver-sync:5.2.1'
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'

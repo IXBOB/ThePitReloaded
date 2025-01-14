@@ -1,10 +1,13 @@
 package net.ixbob.thepit;
 
+import com.github.retrooper.packetevents.PacketEvents;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
+import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import net.ixbob.thepit.holder.PlayerEconomyHolder;
 import net.ixbob.thepit.listener.PlayerJoinListener;
 import net.ixbob.thepit.listener.PlayerQuitListener;
+import net.ixbob.thepit.manager.PitScoreBoardManager;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -22,12 +25,25 @@ public class ThePit extends JavaPlugin {
     }
 
     @Override
+    public void onLoad() {
+        PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
+        PacketEvents.getAPI().load();
+        PlayerEconomyHolder.getInstance(); //加载类，确保观察者被实例化并激活观察者逻辑
+        PitScoreBoardManager.getInstance();
+    }
+
+    @Override
     public void onEnable() {
+        PacketEvents.getAPI().init();
         registerListeners(
                 PlayerJoinListener.getInstance(),
                 PlayerQuitListener.getInstance());
-        PlayerEconomyHolder playerEcoHolder = PlayerEconomyHolder.getInstance(); //加载类，确保实例化
         getLogger().log(Level.INFO, "Plugin successfully enabled");
+    }
+
+    @Override
+    public void onDisable() {
+        PacketEvents.getAPI().terminate();
     }
 
     public static ThePit getInstance() {
