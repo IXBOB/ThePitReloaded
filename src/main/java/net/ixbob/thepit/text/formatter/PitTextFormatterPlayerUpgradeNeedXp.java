@@ -1,6 +1,6 @@
-package net.ixbob.thepit;
+package net.ixbob.thepit.text.formatter;
 
-import net.ixbob.thepit.manager.PlayerEconomyManager;
+import net.ixbob.thepit.economy.PlayerEconomyManager;
 import net.ixbob.thepit.util.LevelCalculator;
 import org.bukkit.entity.Player;
 

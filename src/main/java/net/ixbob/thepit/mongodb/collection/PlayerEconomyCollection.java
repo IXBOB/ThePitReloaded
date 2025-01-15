@@ -1,7 +1,7 @@
 package net.ixbob.thepit.mongodb.collection;
 
 import com.mongodb.client.MongoCollection;
-import net.ixbob.thepit.PlayerEconomy;
+import net.ixbob.thepit.economy.PlayerEconomy;
 import net.ixbob.thepit.observer.PlayerEconomyUpdateObserver;
 import net.ixbob.thepit.observer.PlayerEconomyUpdateObservingData;
 import net.ixbob.thepit.util.DateTimeUtil;

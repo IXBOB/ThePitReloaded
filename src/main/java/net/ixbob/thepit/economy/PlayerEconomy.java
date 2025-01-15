@@ -1,4 +1,4 @@
-package net.ixbob.thepit;
+package net.ixbob.thepit.economy;
 
 import net.ixbob.thepit.mongodb.MongoDBManager;
 import net.ixbob.thepit.observer.PlayerEconomyUpdateObserved;

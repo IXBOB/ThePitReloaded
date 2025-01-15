@@ -1,4 +1,4 @@
-package net.ixbob.thepit;
+package net.ixbob.thepit.text.formatter;
 
 public abstract class PitTextFormatter<T> {
 

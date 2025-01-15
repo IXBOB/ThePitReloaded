@@ -1,7 +1,5 @@
-package net.ixbob.thepit.manager;
+package net.ixbob.thepit.economy;
 
-import net.ixbob.thepit.PlayerEconomy;
-import net.ixbob.thepit.PlayerEconomyFactory;
 import net.ixbob.thepit.listener.PlayerJoinListener;
 import net.ixbob.thepit.listener.PlayerQuitListener;
 import net.ixbob.thepit.observer.*;

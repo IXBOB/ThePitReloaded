@@ -1,4 +1,6 @@
-package net.ixbob.thepit;
+package net.ixbob.thepit.text;
+
+import net.ixbob.thepit.text.formatter.PitTextFormatter;
 
 import java.util.Arrays;
 

@@ -1,7 +1,7 @@
 package net.ixbob.thepit.listener;
 
-import net.ixbob.thepit.PlayerEconomy;
-import net.ixbob.thepit.manager.PlayerEconomyManager;
+import net.ixbob.thepit.economy.PlayerEconomy;
+import net.ixbob.thepit.economy.PlayerEconomyManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;

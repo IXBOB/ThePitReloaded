@@ -4,11 +4,11 @@ import com.github.retrooper.packetevents.PacketEvents;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
-import net.ixbob.thepit.manager.PlayerEconomyManager;
+import net.ixbob.thepit.economy.PlayerEconomyManager;
 import net.ixbob.thepit.listener.PlayerDeathListener;
 import net.ixbob.thepit.listener.PlayerJoinListener;
 import net.ixbob.thepit.listener.PlayerQuitListener;
-import net.ixbob.thepit.manager.PitScoreBoardManager;
+import net.ixbob.thepit.scoreboard.PitScoreboardManager;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -30,7 +30,7 @@ public class ThePit extends JavaPlugin {
         PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
         PacketEvents.getAPI().load();
         PlayerEconomyManager.getInstance(); //加载类，确保观察者被实例化并激活观察者逻辑
-        PitScoreBoardManager.getInstance();
+        PitScoreboardManager.getInstance();
     }
 
     @Override

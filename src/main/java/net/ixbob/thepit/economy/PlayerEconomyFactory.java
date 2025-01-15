@@ -1,6 +1,6 @@
-package net.ixbob.thepit;
+package net.ixbob.thepit.economy;
 
-import net.ixbob.thepit.manager.PitScoreBoardManager;
+import net.ixbob.thepit.scoreboard.PitScoreboardManager;
 import net.ixbob.thepit.mongodb.MongoDBManager;
 import net.ixbob.thepit.mongodb.collection.PlayerEconomyCollection;
 import org.bson.Document;
@@ -31,7 +31,7 @@ public class PlayerEconomyFactory {
 
     private static void attachObservers(PlayerEconomy playerEconomy) {
         playerEconomy.attachObserver(MongoDBManager.getInstance().getPlayerEconomyCollection());
-        playerEconomy.attachObserver(PitScoreBoardManager.getInstance());
+        playerEconomy.attachObserver(PitScoreboardManager.getInstance());
     }
 
 }
