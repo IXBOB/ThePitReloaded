@@ -1,6 +1,6 @@
 package net.ixbob.thepit.observer;
 
-public interface PlayerQuitObserverObject {
+public interface PlayerQuitObserver {
 
     void onNotified(PlayerQuitObservingData data);
 }

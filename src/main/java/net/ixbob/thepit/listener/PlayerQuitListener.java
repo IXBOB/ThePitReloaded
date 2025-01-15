@@ -1,7 +1,7 @@
 package net.ixbob.thepit.listener;
 
-import net.ixbob.thepit.observer.PlayerQuitObservedObject;
-import net.ixbob.thepit.observer.PlayerQuitObserverObject;
+import net.ixbob.thepit.observer.PlayerQuitObserved;
+import net.ixbob.thepit.observer.PlayerQuitObserver;
 import net.ixbob.thepit.observer.PlayerQuitObservingData;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -13,10 +13,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.ArrayList;
 
-public class PlayerQuitListener implements Listener, PlayerQuitObservedObject {
+public class PlayerQuitListener implements Listener, PlayerQuitObserved {
 
     private static final PlayerQuitListener INSTANCE = new PlayerQuitListener();
-    ArrayList<PlayerQuitObserverObject> playerQuitObservers = new ArrayList<>();
+    private final ArrayList<PlayerQuitObserver> playerQuitObservers = new ArrayList<>();
 
     private PlayerQuitListener() {
     }
@@ -39,13 +39,13 @@ public class PlayerQuitListener implements Listener, PlayerQuitObservedObject {
     }
 
     @Override
-    public void attachObserver(PlayerQuitObserverObject observer) {
+    public void attachObserver(PlayerQuitObserver observer) {
         this.playerQuitObservers.add(observer);
     }
 
     @Override
     public void notifyObservers(PlayerQuitObservingData data) {
-        for (PlayerQuitObserverObject observer : this.playerQuitObservers) {
+        for (PlayerQuitObserver observer : this.playerQuitObservers) {
             observer.onNotified(data);
         }
     }

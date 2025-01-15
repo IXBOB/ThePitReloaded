@@ -2,12 +2,14 @@ package net.ixbob.thepit.mongodb.collection;
 
 import com.mongodb.client.MongoCollection;
 import net.ixbob.thepit.PlayerEconomy;
+import net.ixbob.thepit.observer.PlayerEconomyUpdateObserver;
+import net.ixbob.thepit.observer.PlayerEconomyUpdateObservingData;
 import net.ixbob.thepit.util.DateTimeUtil;
 import org.bson.Document;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class PlayerEconomyCollection extends DBCollection {
+public class PlayerEconomyCollection extends DBCollection implements PlayerEconomyUpdateObserver {
 
     public static final String FIELD_PLAYER_NAME = "playerName";
     public static final String FIELD_LAST_UPDATE_TIME = "lastUpdateTime";
@@ -52,5 +54,10 @@ public class PlayerEconomyCollection extends DBCollection {
         document.put(FIELD_PLAYER_POINT_AMOUNT, playerEconomy.getPointAmount());
         document.put(FIELD_PLAYER_XP_AMOUNT, playerEconomy.getXpAmount());
         return document;
+    }
+
+    @Override
+    public void onNotified(PlayerEconomyUpdateObservingData data) {
+        this.updatePlayerEcoData(data.playerEconomy());
     }
 }

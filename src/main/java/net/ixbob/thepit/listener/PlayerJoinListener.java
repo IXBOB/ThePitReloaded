@@ -1,8 +1,8 @@
 package net.ixbob.thepit.listener;
 
 import net.ixbob.thepit.mongodb.MongoDBManager;
-import net.ixbob.thepit.observer.PlayerJoinObservedObject;
-import net.ixbob.thepit.observer.PlayerJoinObserverObject;
+import net.ixbob.thepit.observer.PlayerJoinObserved;
+import net.ixbob.thepit.observer.PlayerJoinObserver;
 import net.ixbob.thepit.observer.PlayerJoinObservingData;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -14,10 +14,10 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.ArrayList;
 
-public class PlayerJoinListener implements Listener, PlayerJoinObservedObject {
+public class PlayerJoinListener implements Listener, PlayerJoinObserved {
 
     private static final PlayerJoinListener INSTANCE = new PlayerJoinListener();
-    ArrayList<PlayerJoinObserverObject> playerJoinObservers = new ArrayList<>();
+    ArrayList<PlayerJoinObserver> playerJoinObservers = new ArrayList<>();
 
     private PlayerJoinListener() {
     }
@@ -41,13 +41,13 @@ public class PlayerJoinListener implements Listener, PlayerJoinObservedObject {
     }
 
     @Override
-    public void attachObserver(PlayerJoinObserverObject observer) {
+    public void attachObserver(PlayerJoinObserver observer) {
         this.playerJoinObservers.add(observer);
     }
 
     @Override
     public void notifyObservers(PlayerJoinObservingData data) {
-        for (PlayerJoinObserverObject observer : this.playerJoinObservers) {
+        for (PlayerJoinObserver observer : this.playerJoinObservers) {
             observer.onNotified(data);
         }
     }

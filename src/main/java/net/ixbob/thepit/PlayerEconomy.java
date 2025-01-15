@@ -1,44 +1,43 @@
 package net.ixbob.thepit;
 
 import net.ixbob.thepit.mongodb.MongoDBManager;
-import net.ixbob.thepit.mongodb.collection.PlayerEconomyCollection;
-import org.bson.Document;
+import net.ixbob.thepit.observer.PlayerEconomyUpdateObserved;
+import net.ixbob.thepit.observer.PlayerEconomyUpdateObserver;
+import net.ixbob.thepit.observer.PlayerEconomyUpdateObservingData;
 import org.bukkit.entity.Player;
 
-public class PlayerEconomy {
+import java.util.ArrayList;
 
+public class PlayerEconomy implements PlayerEconomyUpdateObserved {
+
+    private final ArrayList<PlayerEconomyUpdateObserver> playerEcoUpdateObservers = new ArrayList<>();
     private final Player player;
     private double coinAmount;
     private double pointAmount;
     private double xpAmount;
 
-    private PlayerEconomy(Player player, double coinAmount, double pointAmount, double xpAmount) {
+    public PlayerEconomy(Player player, double coinAmount, double pointAmount, double xpAmount) {
         this.player = player;
         this.coinAmount = coinAmount;
         this.pointAmount = pointAmount;
         this.xpAmount = xpAmount;
     }
 
-    public static PlayerEconomy getEconomyForNew(Player player) {
-        PlayerEconomy newEco = new PlayerEconomy(player, 1000, 0, 0);
-        MongoDBManager.getInstance().getPlayerEconomyCollection().updatePlayerEcoData(newEco);
-        return newEco;
-    }
-
-    public static PlayerEconomy getEconomyFromDataBase(Player player) {
-        PlayerEconomyCollection dbCollection = MongoDBManager.getInstance().getPlayerEconomyCollection();
-        Document savedEcoData = dbCollection.getPlayerEcoData(player);
-        if (savedEcoData == null) {
-            return null;
-        }
-        return new PlayerEconomy(player,
-                savedEcoData.getDouble(PlayerEconomyCollection.FIELD_PLAYER_COIN_AMOUNT),
-                savedEcoData.getDouble(PlayerEconomyCollection.FIELD_PLAYER_POINT_AMOUNT),
-                savedEcoData.getDouble(PlayerEconomyCollection.FIELD_PLAYER_XP_AMOUNT));
-    }
-
     private void onEconomyUpdate() {
+        this.notifyObservers(new PlayerEconomyUpdateObservingData(this));
         MongoDBManager.getInstance().getPlayerEconomyCollection().updatePlayerEcoData(this);
+    }
+
+    @Override
+    public void attachObserver(PlayerEconomyUpdateObserver observer) {
+        this.playerEcoUpdateObservers.add(observer);
+    }
+
+    @Override
+    public void notifyObservers(PlayerEconomyUpdateObservingData data) {
+        for (PlayerEconomyUpdateObserver observer : this.playerEcoUpdateObservers) {
+            observer.onNotified(data);
+        }
     }
 
     public Player getPlayer() {
@@ -54,6 +53,10 @@ public class PlayerEconomy {
         onEconomyUpdate();
     }
 
+    public void addCoinAmount(double addCoinAmount) {
+        this.setCoinAmount(this.coinAmount + addCoinAmount);
+    }
+
     public double getPointAmount() {
         return pointAmount;
     }
@@ -63,6 +66,10 @@ public class PlayerEconomy {
         onEconomyUpdate();
     }
 
+    public void addPointAmount(double addPointAmount) {
+        this.setPointAmount(this.pointAmount + addPointAmount);
+    }
+
     public double getXpAmount() {
         return xpAmount;
     }
@@ -70,5 +77,9 @@ public class PlayerEconomy {
     public void setXpAmount(double xpAmount) {
         this.xpAmount = xpAmount;
         onEconomyUpdate();
+    }
+
+    public void addXpAmount(double addXpAmount) {
+        this.setXpAmount(this.xpAmount + addXpAmount);
     }
 }

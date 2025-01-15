@@ -4,7 +4,8 @@ import com.github.retrooper.packetevents.PacketEvents;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
-import net.ixbob.thepit.holder.PlayerEconomyHolder;
+import net.ixbob.thepit.manager.PlayerEconomyManager;
+import net.ixbob.thepit.listener.PlayerDeathListener;
 import net.ixbob.thepit.listener.PlayerJoinListener;
 import net.ixbob.thepit.listener.PlayerQuitListener;
 import net.ixbob.thepit.manager.PitScoreBoardManager;
@@ -28,7 +29,7 @@ public class ThePit extends JavaPlugin {
     public void onLoad() {
         PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
         PacketEvents.getAPI().load();
-        PlayerEconomyHolder.getInstance(); //加载类，确保观察者被实例化并激活观察者逻辑
+        PlayerEconomyManager.getInstance(); //加载类，确保观察者被实例化并激活观察者逻辑
         PitScoreBoardManager.getInstance();
     }
 
@@ -37,7 +38,8 @@ public class ThePit extends JavaPlugin {
         PacketEvents.getAPI().init();
         registerListeners(
                 PlayerJoinListener.getInstance(),
-                PlayerQuitListener.getInstance());
+                PlayerQuitListener.getInstance(),
+                new PlayerDeathListener());
         getLogger().log(Level.INFO, "Plugin successfully enabled");
     }
 
