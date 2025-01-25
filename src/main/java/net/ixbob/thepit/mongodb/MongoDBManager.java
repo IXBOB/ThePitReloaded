@@ -3,12 +3,13 @@ package net.ixbob.thepit.mongodb;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
+import net.ixbob.thepit.holder.ConfigHolder;
 import net.ixbob.thepit.mongodb.collection.PlayerEconomyCollection;
 import net.ixbob.thepit.mongodb.collection.RegisteredPlayerCollection;
 
 public class MongoDBManager {
 
-    private static final String DB_URI = "mongodb://localhost:27017";
+    private static final String DB_URI = "mongodb://%s:%s";
 
     private static final MongoDBManager instance = new MongoDBManager();
     private final MongoClient mongoClient;
@@ -17,10 +18,19 @@ public class MongoDBManager {
     private final PlayerEconomyCollection playerEconomyCollection;
 
     private MongoDBManager() {
-        mongoClient = MongoClients.create(DB_URI);
-        usingDataBase = mongoClient.getDatabase("ThePitReloaded");
-        registeredPlayerCollection = new RegisteredPlayerCollection(usingDataBase.getCollection("registeredPlayer"));
-        playerEconomyCollection = new PlayerEconomyCollection(usingDataBase.getCollection("playerEconomy"));
+        final ConfigHolder configHolder = ConfigHolder.getInstance();
+        if (configHolder.getIsMongoDBEnabled()) {
+            mongoClient = MongoClients.create(String.format(DB_URI,
+                    configHolder.getMongoDBHost(), configHolder.getMongoDBPort()));
+            usingDataBase = mongoClient.getDatabase("ThePitReloaded");
+            registeredPlayerCollection = new RegisteredPlayerCollection(
+                    usingDataBase.getCollection("registeredPlayer"));
+            playerEconomyCollection = new PlayerEconomyCollection(
+                    usingDataBase.getCollection("playerEconomy"));
+        }
+        else {
+            throw new RuntimeException("MongoDB cannot be disabled!");
+        }
     }
 
     public static MongoDBManager getInstance() {

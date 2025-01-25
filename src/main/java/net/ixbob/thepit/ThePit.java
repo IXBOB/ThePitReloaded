@@ -5,6 +5,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import net.ixbob.thepit.economy.PlayerEconomyManager;
+import net.ixbob.thepit.holder.ConfigHolder;
 import net.ixbob.thepit.listener.PlayerDeathListener;
 import net.ixbob.thepit.listener.PlayerJoinListener;
 import net.ixbob.thepit.listener.PlayerQuitListener;
@@ -29,13 +30,15 @@ public class ThePit extends JavaPlugin {
     public void onLoad() {
         PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
         PacketEvents.getAPI().load();
-        PlayerEconomyManager.getInstance(); //加载类，确保观察者被实例化并激活观察者逻辑
-        PitScoreboardManager.getInstance();
     }
 
     @Override
     public void onEnable() {
         PacketEvents.getAPI().init();
+        saveResource("config.yml", false);
+        ConfigHolder.getInstance().reload();
+        PlayerEconomyManager.getInstance(); //加载类，确保观察者被实例化并激活观察者逻辑
+        PitScoreboardManager.getInstance();
         registerListeners(
                 PlayerJoinListener.getInstance(),
                 PlayerQuitListener.getInstance(),
