@@ -9,6 +9,7 @@ import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerUp
 import net.ixbob.thepit.listener.PlayerJoinListener;
 import net.ixbob.thepit.listener.PlayerQuitListener;
 import net.ixbob.thepit.observer.*;
+import net.ixbob.thepit.util.SingletonUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -16,10 +17,11 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public class PitScoreboardManager implements PlayerJoinObserver, PlayerQuitObserver, PlayerEconomyUpdateObserver {
 
-    private static PitScoreboardManager instance = new PitScoreboardManager();
+    private static final Supplier<PitScoreboardManager> instance = SingletonUtil.createSingleton(PitScoreboardManager::new);
     private final HashMap<Player, HashMap<ScoreboardContentEnum, String>> lastSendConcreteScoreMap = new HashMap<>();
 
     private static final String MAIN_OBJECTIVE_NAME = "main";
@@ -30,10 +32,7 @@ public class PitScoreboardManager implements PlayerJoinObserver, PlayerQuitObser
     }
 
     public static PitScoreboardManager getInstance() {
-        if (instance == null) {
-            instance = new PitScoreboardManager();
-        }
-        return instance;
+        return instance.get();
     }
 
     @Override

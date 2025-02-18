@@ -6,12 +6,15 @@ import com.mongodb.client.MongoDatabase;
 import net.ixbob.thepit.holder.ConfigHolder;
 import net.ixbob.thepit.mongodb.collection.PlayerEconomyCollection;
 import net.ixbob.thepit.mongodb.collection.RegisteredPlayerCollection;
+import net.ixbob.thepit.util.SingletonUtil;
+
+import java.util.function.Supplier;
 
 public class MongoDBManager {
 
-    private static final String DB_URI = "mongodb://%s:%s";
+    private static final Supplier<MongoDBManager> instance = SingletonUtil.createSingleton(MongoDBManager::new);
 
-    private static final MongoDBManager instance = new MongoDBManager();
+    private static final String DB_URI = "mongodb://%s:%s";
     private final MongoClient mongoClient;
     private final MongoDatabase usingDataBase;
     private final RegisteredPlayerCollection registeredPlayerCollection;
@@ -34,7 +37,7 @@ public class MongoDBManager {
     }
 
     public static MongoDBManager getInstance() {
-        return instance;
+        return instance.get();
     }
 
     public MongoClient getMongoClient() {

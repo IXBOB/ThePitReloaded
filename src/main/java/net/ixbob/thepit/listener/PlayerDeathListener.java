@@ -2,6 +2,7 @@ package net.ixbob.thepit.listener;
 
 import net.ixbob.thepit.economy.PlayerEconomy;
 import net.ixbob.thepit.economy.PlayerEconomyManager;
+import net.ixbob.thepit.util.SingletonUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -10,7 +11,16 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+import java.util.function.Supplier;
+
 public class PlayerDeathListener implements Listener {
+    private static final Supplier<PlayerDeathListener> instance = SingletonUtil.createSingleton(PlayerDeathListener::new);
+
+    private PlayerDeathListener() {}
+
+    public static PlayerDeathListener getInstance() {
+        return instance.get();
+    }
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {

@@ -3,6 +3,7 @@ package net.ixbob.thepit.listener;
 import net.ixbob.thepit.observer.PlayerQuitObserved;
 import net.ixbob.thepit.observer.PlayerQuitObserver;
 import net.ixbob.thepit.observer.PlayerQuitObservingData;
+import net.ixbob.thepit.util.SingletonUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -12,17 +13,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.ArrayList;
+import java.util.function.Supplier;
 
 public class PlayerQuitListener implements Listener, PlayerQuitObserved {
 
-    private static final PlayerQuitListener INSTANCE = new PlayerQuitListener();
+    private static final Supplier<PlayerQuitListener> instance = SingletonUtil.createSingleton(PlayerQuitListener::new);
     private final ArrayList<PlayerQuitObserver> playerQuitObservers = new ArrayList<>();
 
-    private PlayerQuitListener() {
-    }
+    private PlayerQuitListener() {}
 
     public static PlayerQuitListener getInstance() {
-        return INSTANCE;
+        return instance.get();
     }
 
     @EventHandler

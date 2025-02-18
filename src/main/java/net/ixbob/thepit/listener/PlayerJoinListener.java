@@ -4,6 +4,7 @@ import net.ixbob.thepit.mongodb.MongoDBManager;
 import net.ixbob.thepit.observer.PlayerJoinObserved;
 import net.ixbob.thepit.observer.PlayerJoinObserver;
 import net.ixbob.thepit.observer.PlayerJoinObservingData;
+import net.ixbob.thepit.util.SingletonUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -13,17 +14,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.ArrayList;
+import java.util.function.Supplier;
 
 public class PlayerJoinListener implements Listener, PlayerJoinObserved {
 
-    private static final PlayerJoinListener INSTANCE = new PlayerJoinListener();
+    private static final Supplier<PlayerJoinListener> instance = SingletonUtil.createSingleton(PlayerJoinListener::new);
     ArrayList<PlayerJoinObserver> playerJoinObservers = new ArrayList<>();
 
-    private PlayerJoinListener() {
-    }
+    private PlayerJoinListener() {}
 
     public static PlayerJoinListener getInstance() {
-        return INSTANCE;
+        return instance.get();
     }
 
     @EventHandler

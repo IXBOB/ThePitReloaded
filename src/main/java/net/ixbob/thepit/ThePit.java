@@ -42,7 +42,7 @@ public class ThePit extends JavaPlugin {
         registerListeners(
                 PlayerJoinListener.getInstance(),
                 PlayerQuitListener.getInstance(),
-                new PlayerDeathListener());
+                PlayerDeathListener.getInstance());
         getLogger().log(Level.INFO, "Plugin successfully enabled");
     }
 
