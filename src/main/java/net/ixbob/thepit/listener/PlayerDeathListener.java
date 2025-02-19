@@ -14,7 +14,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import java.util.function.Supplier;
 
 public class PlayerDeathListener implements Listener {
-    private static final Supplier<PlayerDeathListener> instance = SingletonUtil.createSingleton(PlayerDeathListener::new);
+    private static final Supplier<PlayerDeathListener> instance = SingletonUtil.createSingletonLazy(PlayerDeathListener::new);
 
     private PlayerDeathListener() {}
 

@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 
 public class MongoDBManager {
 
-    private static final Supplier<MongoDBManager> instance = SingletonUtil.createSingleton(MongoDBManager::new);
+    private static final Supplier<MongoDBManager> instance = SingletonUtil.createSingletonEager(MongoDBManager::new);
 
     private static final String DB_URI = "mongodb://%s:%s";
     private final MongoClient mongoClient;

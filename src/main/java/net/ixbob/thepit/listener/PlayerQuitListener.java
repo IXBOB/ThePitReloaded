@@ -17,7 +17,7 @@ import java.util.function.Supplier;
 
 public class PlayerQuitListener implements Listener, PlayerQuitObserved {
 
-    private static final Supplier<PlayerQuitListener> instance = SingletonUtil.createSingleton(PlayerQuitListener::new);
+    private static final Supplier<PlayerQuitListener> instance = SingletonUtil.createSingletonLazy(PlayerQuitListener::new);
     private final ArrayList<PlayerQuitObserver> playerQuitObservers = new ArrayList<>();
 
     private PlayerQuitListener() {}

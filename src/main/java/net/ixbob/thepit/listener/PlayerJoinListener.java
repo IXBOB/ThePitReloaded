@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 
 public class PlayerJoinListener implements Listener, PlayerJoinObserved {
 
-    private static final Supplier<PlayerJoinListener> instance = SingletonUtil.createSingleton(PlayerJoinListener::new);
+    private static final Supplier<PlayerJoinListener> instance = SingletonUtil.createSingletonLazy(PlayerJoinListener::new);
     ArrayList<PlayerJoinObserver> playerJoinObservers = new ArrayList<>();
 
     private PlayerJoinListener() {}

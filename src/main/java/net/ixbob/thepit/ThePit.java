@@ -9,6 +9,7 @@ import net.ixbob.thepit.holder.ConfigHolder;
 import net.ixbob.thepit.listener.PlayerDeathListener;
 import net.ixbob.thepit.listener.PlayerJoinListener;
 import net.ixbob.thepit.listener.PlayerQuitListener;
+import net.ixbob.thepit.mongodb.MongoDBManager;
 import net.ixbob.thepit.scoreboard.PitScoreboardManager;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;

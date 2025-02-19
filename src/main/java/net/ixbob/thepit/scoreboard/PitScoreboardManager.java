@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 
 public class PitScoreboardManager implements PlayerJoinObserver, PlayerQuitObserver, PlayerEconomyUpdateObserver {
 
-    private static final Supplier<PitScoreboardManager> instance = SingletonUtil.createSingleton(PitScoreboardManager::new);
+    private static final Supplier<PitScoreboardManager> instance = SingletonUtil.createSingletonEager(PitScoreboardManager::new);
     private final HashMap<Player, HashMap<ScoreboardContentEnum, String>> lastSendConcreteScoreMap = new HashMap<>();
 
     private static final String MAIN_OBJECTIVE_NAME = "main";
