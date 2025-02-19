@@ -3,3 +3,10 @@ database:
     enabled: true
     host: localhost
     port: 27017
+game:
+  world-id: 0  # 插件中大多数功能获取的世界id。默认为0: 主世界
+  enable-pvp-zone:
+    - from: [-100, 50, -100]
+      to: [100, 200, 100]
+    - from: [0.0, 0.0, 0.0]  # 可自定义添加更多的允许PVP区域
+      to: [0.0, 0.0, 0.0]
