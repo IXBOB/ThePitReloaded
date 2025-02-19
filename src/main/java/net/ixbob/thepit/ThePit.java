@@ -38,6 +38,7 @@ public class ThePit extends JavaPlugin {
         PacketEvents.getAPI().init();
         saveResource("config.yml", false);
         ConfigHolder.getInstance().reload();
+        MongoDBManager.getInstance();
         PlayerEconomyManager.getInstance(); //加载类，确保观察者被实例化并激活观察者逻辑
         PitScoreboardManager.getInstance();
         registerListeners(
