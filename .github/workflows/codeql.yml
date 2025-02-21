@@ -1,0 +1,63 @@
+name: "CodeQL Advanced (Java 21)"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: '30 3 * * 2'
+
+jobs:
+  analyze:
+    name: Analyze Java with CodeQL
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      packages: read
+      actions: read
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 1. 安装 JDK 21
+      - name: Set up Java 21
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      # 2. 初始化 CodeQL
+      #    一般建议先初始化，再进行构建，这样 CodeQL 能注入一些编译时信息
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          # 如果只需要分析Java/kotlin，可以写 java-kotlin
+          languages: java-kotlin
+
+          # 当 build-mode=autobuild 时，CodeQL会自己尝试构建，但
+          # 如果需要自定义构建(比如Java21或自定义Gradle命令)，就用 manual
+          build-mode: manual
+
+      # 3. 构建项目（手动模式需要我们手动构建）
+      - name: Build the project with Gradle
+        shell: bash
+        run: |
+          echo "Using Java version:"
+          java -version
+
+          # 给 gradlew 脚本执行权限
+          chmod +x gradlew
+
+          # 执行构建
+          ./gradlew build
+
+      # 4. 执行 CodeQL 分析
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:java"
+          # 如果你想用更丰富的规则，可以开启
+          # queries: security-extended
