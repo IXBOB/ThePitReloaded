@@ -1,3 +1,4 @@
+config-version: 1  # 请勿修改此项，以免在版本更新时导致可能的配置文件丢失
 database:
   mongodb:
     enabled: true
