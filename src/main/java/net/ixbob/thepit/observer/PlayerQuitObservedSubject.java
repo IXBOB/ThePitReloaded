@@ -1,6 +1,6 @@
 package net.ixbob.thepit.observer;
 
-public interface PlayerQuitObserved {
+public interface PlayerQuitObservedSubject {
 
     void attachObserver(PlayerQuitObserver observer);
 

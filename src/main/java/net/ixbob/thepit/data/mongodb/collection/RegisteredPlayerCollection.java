@@ -1,4 +1,4 @@
-package net.ixbob.thepit.mongodb.collection;
+package net.ixbob.thepit.data.mongodb.collection;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Projections;

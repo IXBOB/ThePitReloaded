@@ -1,7 +1,7 @@
 package net.ixbob.thepit.listener;
 
-import net.ixbob.thepit.economy.PlayerEconomy;
-import net.ixbob.thepit.economy.PlayerEconomyManager;
+import net.ixbob.thepit.data.PlayerData;
+import net.ixbob.thepit.data.PlayerDataManager;
 import net.ixbob.thepit.util.SingletonUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -16,7 +16,8 @@ import java.util.function.Supplier;
 public class PlayerDeathListener implements Listener {
     private static final Supplier<PlayerDeathListener> instance = SingletonUtil.createSingletonLazy(PlayerDeathListener::new);
 
-    private PlayerDeathListener() {}
+    private PlayerDeathListener() {
+    }
 
     public static PlayerDeathListener getInstance() {
         return instance.get();
@@ -35,9 +36,9 @@ public class PlayerDeathListener implements Listener {
 
         double addCoin = 12.0;
         double addExp = 20.0;
-        PlayerEconomy killerEco = PlayerEconomyManager.getInstance().getEconomy(killer);
-        killerEco.addCoinAmount(addCoin);
-        killerEco.addXpAmount(addExp);
+        PlayerData killerData = PlayerDataManager.getInstance().getData(killer);
+        killerData.addCoinAmount(addCoin);
+        killerData.addXpAmount(addExp);
         deathPlayer.sendMessage(
                 Component.text("你被玩家 ", NamedTextColor.RED)
                         .append(Component.text(killer.getName(), NamedTextColor.GRAY))

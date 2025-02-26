@@ -1,6 +1,6 @@
 package net.ixbob.thepit.listener;
 
-import net.ixbob.thepit.observer.PlayerQuitObserved;
+import net.ixbob.thepit.observer.PlayerQuitObservedSubject;
 import net.ixbob.thepit.observer.PlayerQuitObserver;
 import net.ixbob.thepit.observer.PlayerQuitObservingData;
 import net.ixbob.thepit.util.SingletonUtil;
@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import java.util.ArrayList;
 import java.util.function.Supplier;
 
-public class PlayerQuitListener implements Listener, PlayerQuitObserved {
+public class PlayerQuitListener implements Listener, PlayerQuitObservedSubject {
 
     private static final Supplier<PlayerQuitListener> instance = SingletonUtil.createSingletonLazy(PlayerQuitListener::new);
     private final ArrayList<PlayerQuitObserver> playerQuitObservers = new ArrayList<>();

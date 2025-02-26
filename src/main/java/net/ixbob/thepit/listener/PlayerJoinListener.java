@@ -1,7 +1,7 @@
 package net.ixbob.thepit.listener;
 
-import net.ixbob.thepit.mongodb.MongoDBManager;
-import net.ixbob.thepit.observer.PlayerJoinObserved;
+import net.ixbob.thepit.data.mongodb.MongoDBManager;
+import net.ixbob.thepit.observer.PlayerJoinObservedSubject;
 import net.ixbob.thepit.observer.PlayerJoinObserver;
 import net.ixbob.thepit.observer.PlayerJoinObservingData;
 import net.ixbob.thepit.util.SingletonUtil;
@@ -16,7 +16,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import java.util.ArrayList;
 import java.util.function.Supplier;
 
-public class PlayerJoinListener implements Listener, PlayerJoinObserved {
+public class PlayerJoinListener implements Listener, PlayerJoinObservedSubject {
 
     private static final Supplier<PlayerJoinListener> instance = SingletonUtil.createSingletonLazy(PlayerJoinListener::new);
     ArrayList<PlayerJoinObserver> playerJoinObservers = new ArrayList<>();

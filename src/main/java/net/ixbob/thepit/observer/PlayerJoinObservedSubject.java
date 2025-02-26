@@ -1,6 +1,6 @@
 package net.ixbob.thepit.observer;
 
-public interface PlayerJoinObserved {
+public interface PlayerJoinObservedSubject {
 
     void attachObserver(PlayerJoinObserver observer);
 

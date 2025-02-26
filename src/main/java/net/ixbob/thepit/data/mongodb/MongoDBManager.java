@@ -1,11 +1,11 @@
-package net.ixbob.thepit.mongodb;
+package net.ixbob.thepit.data.mongodb;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import net.ixbob.thepit.holder.ConfigHolder;
-import net.ixbob.thepit.mongodb.collection.PlayerEconomyCollection;
-import net.ixbob.thepit.mongodb.collection.RegisteredPlayerCollection;
+import net.ixbob.thepit.data.mongodb.collection.PlayerDataCollection;
+import net.ixbob.thepit.data.mongodb.collection.RegisteredPlayerCollection;
 import net.ixbob.thepit.util.SingletonUtil;
 
 import java.util.function.Supplier;
@@ -18,7 +18,7 @@ public class MongoDBManager {
     private final MongoClient mongoClient;
     private final MongoDatabase usingDataBase;
     private final RegisteredPlayerCollection registeredPlayerCollection;
-    private final PlayerEconomyCollection playerEconomyCollection;
+    private final PlayerDataCollection playerDataCollection;
 
     private MongoDBManager() {
         final ConfigHolder configHolder = ConfigHolder.getInstance();
@@ -28,8 +28,8 @@ public class MongoDBManager {
             usingDataBase = mongoClient.getDatabase("ThePitReloaded");
             registeredPlayerCollection = new RegisteredPlayerCollection(
                     usingDataBase.getCollection("registeredPlayer"));
-            playerEconomyCollection = new PlayerEconomyCollection(
-                    usingDataBase.getCollection("playerEconomy"));
+            playerDataCollection = new PlayerDataCollection(
+                    usingDataBase.getCollection("playerData"));
         }
         else {
             throw new RuntimeException("MongoDB cannot be disabled!");
@@ -52,7 +52,7 @@ public class MongoDBManager {
         return registeredPlayerCollection;
     }
 
-    public PlayerEconomyCollection getPlayerEconomyCollection() {
-        return playerEconomyCollection;
+    public PlayerDataCollection getPlayerDataCollection() {
+        return playerDataCollection;
     }
 }

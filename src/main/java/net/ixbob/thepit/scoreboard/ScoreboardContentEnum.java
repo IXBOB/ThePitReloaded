@@ -13,10 +13,10 @@ import java.util.stream.Collectors;
 public enum ScoreboardContentEnum {
 
     LINE_9(9, ScoreboardContentFlag.HARD_CODE_TEXT, new PitText<>(" ")),
-    LINE_8(8, ScoreboardContentFlag.ECONOMY_TEXT, new PitText<>("硬币:  §6%s", new PitTextFormatterPlayerCoin())),
+    LINE_8(8, ScoreboardContentFlag.PLAYER_DATA_TEXT, new PitText<>("硬币:  §6%s", new PitTextFormatterPlayerCoin())),
     LINE_7(7, ScoreboardContentFlag.HARD_CODE_TEXT, new PitText<>("  ")),
-    LINE_6(6, ScoreboardContentFlag.ECONOMY_TEXT, new PitText<>("等级:  §e%s", new PitTextFormatterPlayerLevel())),
-    LINE_5(5, ScoreboardContentFlag.ECONOMY_TEXT, new PitText<>("距升级:  §b%s 经验", new PitTextFormatterPlayerUpgradeNeedXp())),
+    LINE_6(6, ScoreboardContentFlag.PLAYER_DATA_TEXT, new PitText<>("等级:  §e%s", new PitTextFormatterPlayerLevel())),
+    LINE_5(5, ScoreboardContentFlag.PLAYER_DATA_TEXT, new PitText<>("距升级:  §b%s 经验", new PitTextFormatterPlayerUpgradeNeedXp())),
     LINE_4(4, ScoreboardContentFlag.HARD_CODE_TEXT, new PitText<>("   "));
 
     public static List<ScoreboardContentEnum> getContentsOf(ScoreboardContentFlag flag) {

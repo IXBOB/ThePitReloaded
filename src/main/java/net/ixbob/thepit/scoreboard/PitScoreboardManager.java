@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-public class PitScoreboardManager implements PlayerJoinObserver, PlayerQuitObserver, PlayerEconomyUpdateObserver {
+public class PitScoreboardManager implements PlayerJoinObserver, PlayerQuitObserver, PlayerDataUpdateObserver {
 
     private static final Supplier<PitScoreboardManager> instance = SingletonUtil.createSingletonEager(PitScoreboardManager::new);
     private final HashMap<Player, HashMap<ScoreboardContentEnum, String>> lastSendConcreteScoreMap = new HashMap<>();
@@ -46,8 +46,8 @@ public class PitScoreboardManager implements PlayerJoinObserver, PlayerQuitObser
     }
 
     @Override
-    public void onNotified(PlayerEconomyUpdateObservingData data) {
-        sendUpdateEconomyScorePacket(data.playerEconomy().getPlayer());
+    public void onNotified(PlayerDataUpdateObservingData data) {
+        sendUpdatePlayerDataScorePacket(data.playerData().getPlayer());
     }
 
     private void sendInitScoreboardPacket(Player player) {
@@ -69,19 +69,19 @@ public class PitScoreboardManager implements PlayerJoinObserver, PlayerQuitObser
         user.sendPacket(displayPacket);
     }
 
-    private void sendUpdateEconomyScorePacket(Player player) {
+    private void sendUpdatePlayerDataScorePacket(Player player) {
         HashMap<ScoreboardContentEnum, String> sentScoreMap =
                 this.lastSendConcreteScoreMap.getOrDefault(player, new HashMap<>());
         new HashMap<>(sentScoreMap).forEach((contentEnum, lastSentConcreteStr) -> {
-            if (contentEnum.getFlag() == ScoreboardContentFlag.ECONOMY_TEXT) {
+            if (contentEnum.getFlag() == ScoreboardContentFlag.PLAYER_DATA_TEXT) {
                 sendResetCurrentScorePacket(player, contentEnum);
             }
-                });
-        for (ScoreboardContentEnum contentEnum : ScoreboardContentEnum.getContentsOf(ScoreboardContentFlag.ECONOMY_TEXT)) {
-            sendCreateOrUpdateCurrentScorePacket(
-                    player, contentEnum,
-                    contentEnum.getContent().getFormattedText(player));
-        }
+        });
+        ScoreboardContentEnum.getContentsOf(ScoreboardContentFlag.PLAYER_DATA_TEXT).forEach(contentEnum ->
+                sendCreateOrUpdateCurrentScorePacket(
+                        player, contentEnum,
+                        contentEnum.getContent().getFormattedText(player))
+        );
     }
 
     private void sendCreateOrUpdateCurrentScorePacket(Player player, ScoreboardContentEnum contentEnum, String contentStr) {
