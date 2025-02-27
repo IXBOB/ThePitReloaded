@@ -15,6 +15,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -52,40 +53,41 @@ public class PitScoreboardManager implements PlayerJoinObserver, PlayerQuitObser
 
     private void sendInitScoreboardPacket(Player player) {
         User user = PacketEvents.getAPI().getPlayerManager().getUser(player);
-        WrapperPlayServerScoreboardObjective objPacket = new WrapperPlayServerScoreboardObjective(
+        // 创建计分板 objective
+        WrapperPlayServerScoreboardObjective createObjPacket = new WrapperPlayServerScoreboardObjective(
                 MAIN_OBJECTIVE_NAME,
                 WrapperPlayServerScoreboardObjective.ObjectiveMode.CREATE,
                 Component.text("天坑乱斗")
                         .color(NamedTextColor.YELLOW)
                         .decorate(TextDecoration.BOLD),
                 WrapperPlayServerScoreboardObjective.RenderType.INTEGER);
-        user.sendPacket(objPacket);
-        for (ScoreboardContentEnum contentEnum : ScoreboardContentEnum.values()) {
-            sendCreateOrUpdateCurrentScorePacket(
-                    player, contentEnum,
-                    contentEnum.getContent().getFormattedText(player));
-        }
-        WrapperPlayServerDisplayScoreboard displayPacket = new WrapperPlayServerDisplayScoreboard(1, "main");
-        user.sendPacket(displayPacket);
+        user.sendPacket(createObjPacket);
+        // 创建计分板 scores
+        Arrays.stream(ScoreboardContentEnum.values()).forEach(boardEnum ->
+                sendCreateOrUpdateCurrentScorePacket(player, boardEnum));
+        WrapperPlayServerDisplayScoreboard displayObjPacket = new WrapperPlayServerDisplayScoreboard(1, "main");
+        user.sendPacket(displayObjPacket);
     }
 
     private void sendUpdatePlayerDataScorePacket(Player player) {
         HashMap<ScoreboardContentEnum, String> sentScoreMap =
                 this.lastSendConcreteScoreMap.getOrDefault(player, new HashMap<>());
+        // 重置曾经创建过的计分板 scores
         new HashMap<>(sentScoreMap).forEach((contentEnum, lastSentConcreteStr) -> {
             if (contentEnum.getFlag() == ScoreboardContentFlag.PLAYER_DATA_TEXT) {
                 sendResetCurrentScorePacket(player, contentEnum);
             }
         });
-        ScoreboardContentEnum.getContentsOf(ScoreboardContentFlag.PLAYER_DATA_TEXT).forEach(contentEnum ->
-                sendCreateOrUpdateCurrentScorePacket(
-                        player, contentEnum,
-                        contentEnum.getContent().getFormattedText(player))
+        // 创建新的计分板 scores
+        ScoreboardContentEnum.getContentsOf(ScoreboardContentFlag.PLAYER_DATA_TEXT)
+                .forEach(contentEnum ->
+                sendCreateOrUpdateCurrentScorePacket(player, contentEnum)
         );
     }
 
-    private void sendCreateOrUpdateCurrentScorePacket(Player player, ScoreboardContentEnum contentEnum, String contentStr) {
+    private void sendCreateOrUpdateCurrentScorePacket(Player player, ScoreboardContentEnum contentEnum) {
         User user = PacketEvents.getAPI().getPlayerManager().getUser(player);
+        String contentStr = contentEnum.getContent().getFormattedText(player);
         this.lastSendConcreteScoreMap.putIfAbsent(player, new HashMap<>());
         this.lastSendConcreteScoreMap.get(player).put(contentEnum, contentStr);
         WrapperPlayServerUpdateScore scorePacket = new WrapperPlayServerUpdateScore(
