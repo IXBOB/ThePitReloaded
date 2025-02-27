@@ -4,13 +4,13 @@ import com.github.retrooper.packetevents.PacketEvents;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
-import net.ixbob.thepit.data.PlayerDataManager;
+import net.ixbob.thepit.data.PitPlayerDataManager;
+import net.ixbob.thepit.data.mongodb.MongoDBManager;
 import net.ixbob.thepit.holder.ConfigHolder;
 import net.ixbob.thepit.listener.EntityDamageByEntityListener;
 import net.ixbob.thepit.listener.PlayerDeathListener;
 import net.ixbob.thepit.listener.PlayerJoinListener;
 import net.ixbob.thepit.listener.PlayerQuitListener;
-import net.ixbob.thepit.data.mongodb.MongoDBManager;
 import net.ixbob.thepit.scoreboard.PitScoreboardManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -72,7 +72,7 @@ public class ThePit extends JavaPlugin {
 
         ConfigHolder.getInstance().reload();
         MongoDBManager.getInstance();
-        PlayerDataManager.getInstance(); //加载类，确保观察者被实例化并激活观察者逻辑
+        PitPlayerDataManager.getInstance(); //加载类，确保观察者被实例化并激活观察者逻辑
         PitScoreboardManager.getInstance();
         registerListeners(
                 EntityDamageByEntityListener.getInstance(),

@@ -1,7 +1,7 @@
 package net.ixbob.thepit.listener;
 
-import net.ixbob.thepit.data.PlayerData;
-import net.ixbob.thepit.data.PlayerDataManager;
+import net.ixbob.thepit.data.PitPlayerData;
+import net.ixbob.thepit.data.PitPlayerDataManager;
 import net.ixbob.thepit.util.SingletonUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -36,7 +36,7 @@ public class PlayerDeathListener implements Listener {
 
         double addCoin = 12.0;
         double addExp = 20.0;
-        PlayerData killerData = PlayerDataManager.getInstance().getData(killer);
+        PitPlayerData killerData = PitPlayerDataManager.getInstance().getData(killer);
         killerData.addCoinAmount(addCoin);
         killerData.addXpAmount(addExp);
         deathPlayer.sendMessage(

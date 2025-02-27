@@ -47,7 +47,7 @@ public class PitScoreboardManager implements PlayerJoinObserver, PlayerQuitObser
 
     @Override
     public void onNotified(PlayerDataUpdateObservingData data) {
-        sendUpdatePlayerDataScorePacket(data.playerData().getPlayer());
+        sendUpdatePlayerDataScorePacket(data.pitPlayerData().getPlayer());
     }
 
     private void sendInitScoreboardPacket(Player player) {

@@ -43,4 +43,3 @@ bin/
 
 ### inner test-server ###
 /test-server/**
-!/test-server/paper-1.21.4-121.jar
